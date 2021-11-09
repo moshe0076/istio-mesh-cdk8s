@@ -1,0 +1,96 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    name: webservices
+  name: webservices
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: front-end-v1
+  name: front-end-v1
+  namespace: webservices
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: front-end-v1
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: front-end-v1
+  name: front-end-v1
+  namespace: webservices
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: front-end-v1
+  template:
+    metadata:
+      labels:
+        app: front-end-v1
+      name: front-end-v1
+      namespace: webservices
+    spec:
+      containers:
+        - env:
+            - name: APP_NAME
+              value: front-end
+            - name: APP_VERSION
+              value: V1
+          image: moshen/istio-mesh:latest
+          name: front-end-v1
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: front-end-v2
+  name: front-end-v2
+  namespace: webservices
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: front-end-v2
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: front-end-v2
+  name: front-end-v2
+  namespace: webservices
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: front-end-v2
+  template:
+    metadata:
+      labels:
+        app: front-end-v2
+      name: front-end-v2
+      namespace: webservices
+    spec:
+      containers:
+        - env:
+            - name: APP_NAME
+              value: front-end
+            - name: APP_VERSION
+              value: V2
+          image: moshen/istio-mesh:latest
+          name: front-end-v2
+          ports:
+            - containerPort: 8080
