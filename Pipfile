@@ -1,0 +1,18 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[requires]
+python_version = "3"
+
+[packages]
+constructs = "~=3.3.161"
+cdk8s = "~=1.1.10"
+cdk8s-plus-22 = "~=1.0.0.b21"
+python-benedict = "*"
+pyyaml = "*"
+requests = "*"
+
+[pipenv]
+allow_prereleases = true
