@@ -42,12 +42,12 @@ static_resources:
                   prefix: "/back-end-service/"
                 route:
                   prefix_rewrite: "/"
-                  cluster: back-end-service-v1-deployment
+                  cluster: back-end-service-deployment
               - match:
                   prefix: "/back-end-service"
                 route:
                   prefix_rewrite: "/"
-                  cluster: back-end-service-v1-deployment
+                  cluster: back-end-service-deployment
           http_filters:
           - name: envoy.filters.http.router
             typed_config: {}
@@ -78,18 +78,18 @@ static_resources:
               socket_address:
                 address: front-end-v2
                 port_value: 8080
-  - name: back-end-service-v1-deployment
+  - name: back-end-service-deployment
     connect_timeout: 1s
     type: strict_dns
     lb_policy: round_robin
     load_assignment:
-      cluster_name: back-end-service-v1-deployment
+      cluster_name: back-end-service-deployment
       endpoints:
       - lb_endpoints:
         - endpoint:
             address:
               socket_address:
-                address: back-end-service-v1
+                address: back-end
                 port_value: 8080
 admin:
   access_log_path: "/dev/null"

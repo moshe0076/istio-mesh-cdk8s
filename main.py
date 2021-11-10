@@ -61,6 +61,26 @@ class WebServicesChart(Chart):
                                    ),
                                ],
                                port=8080)
+        web_service.WebService(self,
+                               'back-end',
+                               metadata_namespace="webservices",
+                               metadata_name="back-end",
+                               labels={
+                                   "app": "back-end"
+                               },
+                               image='moshen/istio-mesh:latest',
+                               replicas=1,
+                               env_vars=[
+                                   k8s.EnvVar(
+                                       name="APP_NAME",
+                                       value="back-end"
+                                   ),
+                                   k8s.EnvVar(
+                                       name="APP_VERSION",
+                                       value="V1"
+                                   ),
+                               ],
+                               port=8080)
 
 
 class EnvoyProxyChart(Chart):
